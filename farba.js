@@ -1,3 +1,19 @@
+/*
+	Copyright 2013 Sergey Chernykh
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	   http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+*/
+
 var farbaUtils = {
 
 	addListener: function ( element, eventName, handler ) {
@@ -23,7 +39,7 @@ var farbaUtils = {
 		}
 	},
 
-	fixEvent: function ( event ) {//by John Resig
+	fixEvent: function ( event ) {//------  by John Resig
 		if ( !event || !event.stopPropagation ) {
 			var old = event || window.event;
 			event = {};
@@ -145,7 +161,7 @@ var farbaUtils = {
 	},
 
 	isInt: function ( o ) {
-		return SeptembruaryUtils.isNumber( o ) && o%1 === 0;
+		return farbaUtils.isNumber( o ) && o%1 === 0;
 	},
 
 	copyObject: function ( o ) {
@@ -162,7 +178,6 @@ function Farba ( eid, foptions ) {
 	var canvas, ctx, circles,
 		itexts, box, clock = false,
 		u = farbaUtils,
-		speed = 5,
 		red = 255,
 		green = 255,
 		blue = 255,
@@ -174,23 +189,24 @@ function Farba ( eid, foptions ) {
 		percGreen = function () { return u.getPercent( green ); },
 		percBlue = function () { return u.getPercent( blue ); },
 		options = {
-			getSizeByElement: true,
-			width: 500,
-			height: 477.67,
+			hidden: false,
+			getSizeByElement: false,
+			width: 250,
+			height: 238.8,
 			mouseInvert: false,
-			colorChangeDelay: 20,
+			colorChangeDelay: 30,
 			paddingLeft: 0,
 			paddingRight: 0,
 			paddingTop: 0,
 			fontFamily: "sans-serif",
 			circleStrokeWidth: 2,
-			rgbRelFontSize: 0.15,
+			rgbRelFontSize: 0.2,
 			colorBg: true,
 			rgbText: true,
 			rgbTextPosition: 0.1,
 			hexText: true,
 			hslText: false,
-			hexHslRelFontSize: 0.08,
+			hexHslRelFontSize: 0.15,
 			hexHslTextShiftX: 0,
 			hexHslTextShiftY: 0
 		};
@@ -221,6 +237,26 @@ function Farba ( eid, foptions ) {
 		return ( withHash ) ? "#" + hex() : hex();
 	};
 	this.getHSL = function () { return "hsl("+hue()+","+saturation()+"%,"+lightness()+"%)"; };
+	this.reset = function ( black ) {
+		if ( !black ) {
+			resetColors( "w", [1,1,1] );
+		}else {
+			resetColors( "b", [1,1,1] );
+		}
+		updateCanvas( ctx, circles, itexts  );
+	};
+	this.exterminate = function () {
+		box.parentNode.removeChild( box );
+	};
+	this.hide = function ( reset, fn ) {
+		box.style.display = "none";
+		if ( reset ) { resetColors( "w", [1,1,1] ); updateCanvas( ctx, circles, itexts  ); }
+		if ( fn && u.isFunction( fn ) ) { fn(); }
+	};
+	this.show = function ( fn ) {
+		box.style.display = "inherit";
+		if ( fn && u.isFunction( fn ) ) { fn(); }
+	};
 
 	function getFont( r, rgb ) {
 		var factor = ( rgb ) ? options.rgbRelFontSize : options.hexHslRelFontSize,
@@ -247,6 +283,7 @@ function Farba ( eid, foptions ) {
 				options.width = box.clientWidth;
 				options.height = box.clientHeight;
 		}
+		if ( options.hidden ) { elem.style.display = "none"; }
 	}
 
 	function checkSetOptions( opts ) {
@@ -289,7 +326,7 @@ function Farba ( eid, foptions ) {
 		this.top = topleft.top;
 		this.radius = r;
 		this.stokeWidth = Math.round( r*options.circleStrokeWidth/100 );
-		this.center = { x: r+r/2+pleft, y: r+2*b/3+ptop },
+		this.center = { x: r+r/2+pleft, y: r+2*b/3+ptop };
 		this.radiuses = { r1: b/2, r2: 2*b/3, r3: b/3+b, r4: 2*b/3+r  };
 	}
 
@@ -383,7 +420,7 @@ function Farba ( eid, foptions ) {
 			ctx.fillStyle = "#000";
 			if ( options.hexText ) {
 				hcolor = hex();
-				ctx.fillText( "#" + hcolor, und.centX, und.hexY );//set line y );
+				ctx.fillText( "#" + hcolor, und.centX, und.hexY );
 			}
 			if ( options.hslText ) {
 				if ( !drawInform.degreeSign ) {
@@ -440,18 +477,44 @@ function Farba ( eid, foptions ) {
 			x = e.pageX,
 			y = e.pageY,
 			x1 = x - circles.left,
-			y1 = y - circles.top;
-			whatRGB = checkColor( x1, y1 ),
+			y1 = y - circles.top,
+			addKey = e.shiftKey || e.ctrlKey || e.altKey,
+			whatColor = checkColor( x1, y1 ),
 			cspeed = ( e.button ) ? 1 : -1;
+		if ( !addKey ) {
 			if ( options.mouseInvert ) { cspeed *= -1; }
-		clock = true;
-			changeColor( whatRGB, cspeed, false );
+			clock = true;
+			changeColor( whatColor, cspeed, false );
 			updateCanvas( ctx, circles, itexts  );
-		setTimeout( function(){
-			if ( clock ) {
-				changeColor( whatRGB, cspeed, options.colorChangeDelay );
-			}
-		}, 500 );
+			setTimeout( function(){
+				if ( clock ) {
+					changeColor( whatColor, cspeed, options.colorChangeDelay );
+				}
+			}, 300 );
+		}else {
+			if ( e.shiftKey ) { resetColors( "w", whatColor ); }
+			if ( e.ctrlKey ) { resetColors( "g", whatColor ); }
+			if ( e.altKey ) { resetColors( "b", whatColor ); }
+			updateCanvas( ctx, circles, itexts  );
+		}
+	}
+
+	function resetColors( c, wc ) {
+		var val;
+		if ( c==="w" || c==="b" ) {
+			val = ( c==="w" ) ? 255 : 0;
+			if ( wc[0] ) { red = val; }
+			if ( wc[1] ) { green = val; }
+			if ( wc[2] ) { blue = val; }
+		}else {
+			val = Math.round( ( red + green + blue )/3 );
+			red = val;
+			green = val;
+			blue = val;
+		}
+		circles.red.color = "rgb(" + red + ",0,0)";
+		circles.green.color = "rgb(0," + green + ",0)";
+		circles.blue.color = "rgb(0,0," + blue + ")";
 	}
 
 	function checkColor( x, y ) {
@@ -494,6 +557,9 @@ function Farba ( eid, foptions ) {
 				updateCanvas( ctx, circles, itexts  );
 				changeColor( tests, cs, d );
 			}, d );
+		}
+		if ( !clock && d ) {
+			updateCanvas( ctx, circles, itexts  );
 		}
 	}
 
