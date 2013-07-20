@@ -5,7 +5,7 @@
 	you may not use this file except in compliance with the License.
 	You may obtain a copy of the License at
 
-	   http://www.apache.org/licenses/LICENSE-2.0
+		http://www.apache.org/licenses/LICENSE-2.0
 
 	Unless required by applicable law or agreed to in writing, software
 	distributed under the License is distributed on an "AS IS" BASIS,
@@ -190,6 +190,7 @@ function Farba ( eid, foptions ) {
 		percBlue = function () { return u.getPercent( blue ); },
 		options = {
 			hidden: false,
+			insertBefore: false,
 			getSizeByElement: false,
 			width: 250,
 			height: 238.8,
@@ -200,18 +201,25 @@ function Farba ( eid, foptions ) {
 			paddingTop: 0,
 			fontFamily: "sans-serif",
 			circleStrokeWidth: 2,
+			circleStrokeColor: "#FFF",
 			rgbRelFontSize: 0.2,
 			colorBg: true,
 			rgbText: true,
 			rgbTextPosition: 0.1,
 			hexText: true,
 			hslText: false,
+			redTitle: "Red: ",
+			greenTitle: "Green: ",
+			blueTitle: "Blue: ",
+			hueTitle: "Hue: ",
+			saturationTitle: "Saturation: ",
+			lightnessTitle: "Lightness: ",
 			hexHslRelFontSize: 0.15,
 			hexHslTextShiftX: 0,
 			hexHslTextShiftY: 0
 		};
 
-	this.init = function () {
+	( function () {
 		var elId = eid || "farba";
 		box = document.querySelector( "#" + elId );
 		if ( box ) {
@@ -219,11 +227,11 @@ function Farba ( eid, foptions ) {
 			canvas = buildCanvas( options );
 			ctx = canvas.getContext( "2d" );
 			circles = new oCircles( canvas.width );
-			itexts = new infTexts( circles );
+			itexts = new infoTexts( circles, options );
 			updateCanvas( ctx, circles, itexts  );
 			setEventListeners();
 		}
-	};
+	} ) ();
 
 	this.getRed = function () { return red; };
 	this.getGreen = function () { return green; };
@@ -257,6 +265,26 @@ function Farba ( eid, foptions ) {
 		box.style.display = "inherit";
 		if ( fn && u.isFunction( fn ) ) { fn(); }
 	};
+	this.options = function ( obj ) {
+		if ( obj && u.isObject( obj ) && u.isNotEmpty( obj ) ) {
+			checkSetOptions( obj );
+		}
+		if ( options.getSizeByElement && box.clientHeight ) {
+				options.width = box.clientWidth;
+				options.height = box.clientHeight;
+		}
+		if ( options.hidden ) { box.style.display = "none"; }
+		canvas.parentNode.removeChild( canvas );
+		canvas = buildCanvas( options );
+		ctx = canvas.getContext( "2d" );
+		circles = new oCircles( canvas.width );
+		itexts = new infoTexts( circles, options );
+		circles.red.color = "rgb(" + red + ",0,0)";
+		circles.green.color = "rgb(0," + green + ",0)";
+		circles.blue.color = "rgb(0,0," + blue + ")";
+		updateCanvas( ctx, circles, itexts  );
+		setEventListeners();
+	};
 
 	function getFont( r, rgb ) {
 		var factor = ( rgb ) ? options.rgbRelFontSize : options.hexHslRelFontSize,
@@ -279,9 +307,9 @@ function Farba ( eid, foptions ) {
 		if ( foptions && u.isObject( foptions ) && u.isNotEmpty( foptions ) ) {
 			checkSetOptions( foptions );
 		}
-		if ( options.getSizeByElement && box.clientHeight ) {//height to width >>>> 2.866 to 3
-				options.width = box.clientWidth;
-				options.height = box.clientHeight;
+		if ( options.getSizeByElement && elem.clientHeight ) {//height to width >>>> 2.866 to 3
+				options.width = elem.clientWidth;
+				options.height = elem.clientHeight;
 		}
 		if ( options.hidden ) { elem.style.display = "none"; }
 	}
@@ -297,11 +325,19 @@ function Farba ( eid, foptions ) {
 	}
 
 	function buildCanvas( opts ) {
-		var cnv = document.createElement( "canvas" );
-			cnv.height = opts.height;
-			cnv.width = opts.width;
+		var cnv = document.createElement( "canvas" ),
+			boxPosTest = box.style.position==="relative";
+		cnv.height = opts.height;
+		cnv.width = opts.width;
+		cnv.style.position = ( boxPosTest ) ? "absolute" : "relative";
+		cnv.style.left = "0px";
+		cnv.style.top = "0px";
+		if ( opts.insertBefore ) {
+			box.insertBefore( cnv, box.firstChild );
+		}else {
 			box.appendChild( cnv );
-			return cnv;
+		}
+		return cnv;
 	}
 
 	function drawCircle( ctx, x, y, r, st, sst ) {
@@ -325,12 +361,12 @@ function Farba ( eid, foptions ) {
 		this.left = topleft.left;
 		this.top = topleft.top;
 		this.radius = r;
-		this.stokeWidth = Math.round( r*options.circleStrokeWidth/100 );
+		this.strokeWidth = Math.round( r*options.circleStrokeWidth/100 );
+		this.strokeColor = options.circleStrokeColor;
 		this.center = { x: r+r/2+pleft, y: r+2*b/3+ptop };
-		this.radiuses = { r1: b/2, r2: 2*b/3, r3: b/3+b, r4: 2*b/3+r  };
 	}
 
-	function infTexts( c ) {
+	function infoTexts( c, ops ) {
 		var r = c.radius,
 			l = options.rgbTextPosition*r,
 			rCenter = c.red,
@@ -339,6 +375,12 @@ function Farba ( eid, foptions ) {
 		this.rStart = { x: rCenter.x-l, y: rCenter.y+l  };
 		this.gStart = { x: gCenter.x, y: gCenter.y-2*l  };
 		this.bStart = { x: bCenter.x+l, y: bCenter.y+l  };
+		this.redTitle = ops.redTitle;
+		this.greenTitle = ops.greenTitle;
+		this.blueTitle = ops.blueTitle;
+		this.hueTitle = ops.hueTitle;
+		this.satTitle = ops.saturationTitle;
+		this.ltTitle = ops.lightnessTitle;
 		this.rgbFont = getFont( r, true );
 		this.hexFont = getFont( r );
 		this.underlay = getUnderlay( this.hexFont, c.center, r );
@@ -346,12 +388,12 @@ function Farba ( eid, foptions ) {
 
 	function updateCanvas ( contx, o, t ) {
 		contx.globalCompositeOperation="lighter";
-		contx.lineWidth = o.stokeWidth;
-		var r = o.radius;
+		contx.lineWidth = o.strokeWidth;
+		var r = o.radius, strColor = o.strokeColor;
 		contx.clearRect( 0, 0, canvas.width, canvas.height );
-		drawCircle( contx, o.red.x, o.red.y, r, o.red.color, "#FFFFFF" );
-		drawCircle( contx, o.blue.x, o.blue.y, r, o.blue.color, "#FFFFFF" );
-		drawCircle( contx, o.green.x, o.green.y, r, o.green.color, "#FFFFFF" );
+		drawCircle( contx, o.red.x, o.red.y, r, o.red.color, strColor );
+		drawCircle( contx, o.blue.x, o.blue.y, r, o.blue.color, strColor );
+		drawCircle( contx, o.green.x, o.green.y, r, o.green.color, strColor );
 		drawInform( contx, o, t );
 		contx.globalCompositeOperation="destination-over";
 		if ( options.colorBg ) { drawBg( contx ); }
@@ -400,14 +442,14 @@ function Farba ( eid, foptions ) {
 			ctx.textBaseline = "top";
 			ctx.textAlign = "start";
 			ctx.fillStyle = ( blue<125 ) ? "rgb(0,0,"+invBl+")" : "#FFF";
-			ctx.fillText( "Blue: " + blue, t.bStart.x, t.bStart.y );
+			ctx.fillText( t.blueTitle + blue, t.bStart.x, t.bStart.y );
 			ctx.textAlign = "end";
 			ctx.fillStyle = ( red<125 ) ? "rgb("+invRd+",0,0)" : "#FFF";
-			ctx.fillText( "Red: " + red, t.rStart.x, t.rStart.y );
+			ctx.fillText( t.redTitle + red, t.rStart.x, t.rStart.y );
 			ctx.textAlign = "center";
 			ctx.textBaseline = "bottom";
 			ctx.fillStyle = ( green<125 ) ? "rgb(0,"+invGr+",0)" : "#FFF";
-			ctx.fillText( "Green: " + green, t.gStart.x, t.gStart.y );
+			ctx.fillText( t.greenTitle + green, t.gStart.x, t.gStart.y );
 		}
 		if ( options.hexText || options.hslText ) {
 			und = t.underlay;
@@ -429,9 +471,9 @@ function Farba ( eid, foptions ) {
 				hu = hue();
 				sa = saturation();
 				lt = lightness();
-				ctx.fillText( "Hue: " + hu + drawInform.degreeSign, und.centX, und.huY );
-				ctx.fillText( "Saturation: " + sa + "%", und.centX, und.saY );
-				ctx.fillText( "Lightness: " + lt + "%", und.centX, und.ltY );
+				ctx.fillText( t.hueTitle + hu + drawInform.degreeSign, und.centX, und.huY );
+				ctx.fillText( t.satTitle + sa + "%", und.centX, und.saY );
+				ctx.fillText( t.ltTitle + lt + "%", und.centX, und.ltY );
 			}
 		}
 	}
@@ -492,8 +534,8 @@ function Farba ( eid, foptions ) {
 				}
 			}, 300 );
 		}else {
-			if ( e.shiftKey ) { resetColors( "w", whatColor ); }
-			if ( e.ctrlKey ) { resetColors( "g", whatColor ); }
+			if ( e.ctrlKey ) { resetColors( "w", whatColor ); }
+			if ( e.shiftKey ) { resetColors( "g", whatColor ); }
 			if ( e.altKey ) { resetColors( "b", whatColor ); }
 			updateCanvas( ctx, circles, itexts  );
 		}
@@ -531,7 +573,7 @@ function Farba ( eid, foptions ) {
 		return arr;
 	}
 
-	function mUHandler(event) {
+	function mUHandler() {
 		clock = false;
 	}
 
@@ -562,5 +604,4 @@ function Farba ( eid, foptions ) {
 			updateCanvas( ctx, circles, itexts  );
 		}
 	}
-
 }
