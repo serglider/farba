@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Farba : Original, customizable, educational color picker." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Farba</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/serglider/farba">View on GitHub</a>
+
+          <h1 id="project_title">Farba</h1>
+          <h2 id="project_tagline">Original, customizable, educational color picker.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/serglider/farba/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/serglider/farba/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="farba" class="anchor" href="#farba"><span class="octicon octicon-link"></span></a>farba</h1>
+
+<h4>
+<a name="description" class="anchor" href="#description"><span class="octicon octicon-link"></span></a>Description</h4>
+
+<p>Yet another color picker. But  this one is originally designed, highly customizable, somewhat educational and named after Ukrainian word which means color or paint.</p>
+
+<p>Farba consists of background and three intersecting circles. Background optionally may be transparent or colored in the resulting color. Intersection of the circles forms seven section: red, green, blue, cyan, magenta, yellow and  resulting color areas.</p>
+
+<p>By clicking or holding down  your right or left mouse button in pure color areas, you will increase or decrease  contribution of that color to result. By doing so in mixed color areas, you will change contribution of several colors simultaneously.</p>
+
+<p>There is possibility to quickly set the component value (or values) to extreme range. By clicking while holding <code>Ctrl</code> button you will change value to <code>255</code> and holding <code>Alt</code> button you will change value to <code>0</code>. If you hold <code>Shift</code>, then a click will set all colors to average value.</p>
+
+<h3>
+<a name="setup" class="anchor" href="#setup"><span class="octicon octicon-link"></span></a>Setup</h3>
+
+<p>Load <em>farba.js</em> on your page and create new instance of the Farba constructor.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">novafarba</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Farba</span> <span class="p">();</span>
+<span class="kd">var</span> <span class="nx">peinture</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Farba</span> <span class="p">(</span> <span class="s2">"peinture"</span> <span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">kraska</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Farba</span> <span class="p">(</span> <span class="s2">"kraska"</span><span class="p">,</span> <span class="nx">options</span> <span class="p">);</span>
+</pre></div>
+
+<p>You can pass two arguments to the constructor function: id of the container element and object containing options which will override the default ones. If you provide falsy value or omit the first argument, constructor will search for the element with id <code>farba</code>.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">neuefarbe</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Farba</span> <span class="p">(</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">options</span> <span class="p">);</span>
+</pre></div>
+
+<p>Also you can override default options by using the <code>data-farba-options</code> attribute of the container element. Value of the attribute has to be JSON string representing option object. Note: the option object passed in constructor function overrides this one.</p>
+
+<div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'farba'</span> <span class="na">data-farba-options=</span><span class="s">'{"width":1000,"height":867,"mouseInvert":true}'</span><span class="nt">&gt;&lt;/div&gt;</span>
+</pre></div>
+
+<p>Finally you can change any options dynamically by instance method <code>options</code>.</p>
+
+<h3>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
+
+<p>To be continued.</p>
+
+<table>
+<thead><tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><em>hidden</em></td>
+<td><em>boolean</em></td>
+<td><em>false</em></td>
+<td>Finally you can change any options dynamically by instance method <code>options</code>.</td>
+</tr>
+<tr>
+<td><em>insertBefore</em></td>
+<td><em>boolean</em></td>
+<td><em>false</em></td>
+<td>Finally you can change any options dynamihod <code>options</code>.</td>
+</tr>
+<tr>
+<td><em>getSizeByElement</em></td>
+<td><em>boolean</em></td>
+<td><em>false</em></td>
+<td>Finally you can change any options.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+</tbody>
+</table><h3>
+<a name="methods" class="anchor" href="#methods"><span class="octicon octicon-link"></span></a>Methods</h3>
+
+<p>To be continued.</p>
+
+<h3>
+<a name="licence" class="anchor" href="#licence"><span class="octicon octicon-link"></span></a>Licence</h3>
+
+<p>To be continued.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Farba maintained by <a href="https://github.com/serglider">serglider</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
