@@ -56,7 +56,7 @@
 <span class="kd">var</span> <span class="nx">kraska</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Farba</span> <span class="p">(</span> <span class="s2">"kraska"</span><span class="p">,</span> <span class="nx">options</span> <span class="p">);</span>
 </pre></div>
 
-<p>You can pass two arguments to the constructor function: id of the container element and object containing options which will override the default ones. If you provide falsy value or omit the first argument, constructor will search for the element with id <code>farba</code>.</p>
+<p>You can pass two arguments to the constructor function: id of the container <code>div</code> element and object containing options which will override the default ones. If you provide falsy value or omit the first argument, constructor will search for the element with id <code>farba</code>.</p>
 
 <div class="highlight"><pre><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">};</span>
 <span class="kd">var</span> <span class="nx">neuefarbe</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Farba</span> <span class="p">(</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">options</span> <span class="p">);</span>
@@ -72,7 +72,7 @@
 <h3>
 <a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
 
-<p>To be continued.</p>
+<p>The table below describes options that you can override.</p>
 
 <table>
 <thead><tr>
@@ -86,31 +86,205 @@
 <td><em>hidden</em></td>
 <td><em>boolean</em></td>
 <td><em>false</em></td>
-<td>Finally you can change any options dynamically by instance method <code>options</code>.</td>
+<td>If <em>true</em>, it will set the display property of the container <code>div</code> element  to <em>"none"</em>.</td>
 </tr>
 <tr>
 <td><em>insertBefore</em></td>
 <td><em>boolean</em></td>
 <td><em>false</em></td>
-<td>Finally you can change any options dynamihod <code>options</code>.</td>
+<td>If <em>true</em>, it will insert the color picker canvas before the first child node of the container element. Otherwise the canvas will be appended after the  last child node of the container element..</td>
 </tr>
 <tr>
 <td><em>getSizeByElement</em></td>
 <td><em>boolean</em></td>
 <td><em>false</em></td>
-<td>Finally you can change any options.</td>
+<td>If <em>true</em>, it will fill the whole container element. In that case the width has to be, at least, slightly (3 to 2.87) bigger than the height. This feature doesn't work if the container element is hidden. Use option "hidden" instead.</td>
 </tr>
 <tr>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
+<td><em>width</em></td>
+<td><em>number</em></td>
+<td><em>250</em></td>
+<td>The width of the color picker canvas in pixels.</td>
+</tr>
+<tr>
+<td><em>height</em></td>
+<td><em>number</em></td>
+<td><em>238.8</em></td>
+<td>The height of the color picker canvas in pixels.</td>
+</tr>
+<tr>
+<td><em>colorBg</em></td>
+<td><em>boolean</em></td>
+<td><em>true</em></td>
+<td>If <em>true</em>, it will set background color of the canvas to the current color. Otherwise the background will be transparent.</td>
+</tr>
+<tr>
+<td><em>mouseInvert</em></td>
+<td><em>boolean</em></td>
+<td><em>false</em></td>
+<td>It swaps actions of the mouse buttons.</td>
+</tr>
+<tr>
+<td><em>colorChangeDelay</em></td>
+<td><em>number</em></td>
+<td><em>30</em></td>
+<td>This is delay in milliseconds before the next change when user is holding her mouse down.</td>
+</tr>
+<tr>
+<td><em>paddingLeft</em></td>
+<td><em>number</em></td>
+<td><em>0</em></td>
+<td>This is space between the left edge of the canvas and the leftmost edge of the red circle in percent of the canvas width.</td>
+</tr>
+<tr>
+<td><em>paddingRight</em></td>
+<td><em>number</em></td>
+<td><em>0</em></td>
+<td>This is space between the right edge of the canvas and the rightmost edge of the blue circle in percent of the canvas width.</td>
+</tr>
+<tr>
+<td><em>paddingTop</em></td>
+<td><em>number</em></td>
+<td><em>0</em></td>
+<td>This is space between the upper edge of the canvas and the topmost edge of the green circle in percent of the canvas width.</td>
+</tr>
+<tr>
+<td><em>fontFamily</em></td>
+<td><em>string</em></td>
+<td><em>"sans-serif"</em></td>
+<td>The font used on the canvas.</td>
+</tr>
+<tr>
+<td><em>circleStrokeWidth</em></td>
+<td><em>number</em></td>
+<td><em>2</em></td>
+<td>The width of the stroke line of the circles in percent of the radius.</td>
+</tr>
+<tr>
+<td><em>circleStrokeColor</em></td>
+<td><em>string</em></td>
+<td><em>"#FFF"</em></td>
+<td>The color of the stroke line of the circles.</td>
+</tr>
+<tr>
+<td><em>rgbText</em></td>
+<td><em>boolean</em></td>
+<td><em>true</em></td>
+<td>This defines whether or not to display RGB information.</td>
+</tr>
+<tr>
+<td><em>rgbRelFontSize</em></td>
+<td><em>number</em></td>
+<td><em>0.2</em></td>
+<td>This sets the font size of the RGB text in fractions of the radius.</td>
+</tr>
+<tr>
+<td><em>rgbTextPosition</em></td>
+<td><em>number</em></td>
+<td><em>0.1</em></td>
+<td>This sets the shift of the corresponding line of the RGB text from the center of the circle. The shift is measured in fractions of the radius.</td>
+</tr>
+<tr>
+<td><em>hexText</em></td>
+<td><em>boolean</em></td>
+<td><em>false</em></td>
+<td>This defines whether or not to display hexadecimal representation of the color.</td>
+</tr>
+<tr>
+<td><em>hslText</em></td>
+<td><em>boolean</em></td>
+<td><em>false</em></td>
+<td>This defines whether or not to display hue, saturation and lightness of the color.</td>
+</tr>
+<tr>
+<td><em>hexHslRelFontSize</em></td>
+<td><em>number</em></td>
+<td><em>0.15</em></td>
+<td>This sets the font size of the HEX and HSL information  in fractions of the radius.</td>
+</tr>
+<tr>
+<td><em>hexHslTextShiftX</em></td>
+<td><em>number</em></td>
+<td><em>0</em></td>
+<td>This sets the horizontal shift of the HEX and HSL information from the common center of the circles. The shift is measured in fractions of the radius.</td>
+</tr>
+<tr>
+<td><em>hexHslTextShiftY</em></td>
+<td><em>number</em></td>
+<td><em>0</em></td>
+<td>This sets the vertical shift of the HEX and HSL information from the common center of the circles. The shift is measured in fractions of the radius.</td>
+</tr>
+<tr>
+<td><em>redTitle</em></td>
+<td><em>string</em></td>
+<td><em>"Red: "</em></td>
+<td>The text inserted before the corresponding value.</td>
+</tr>
+<tr>
+<td><em>greenTitle</em></td>
+<td><em>string</em></td>
+<td><em>"Green: "</em></td>
+<td>The text inserted before the corresponding value.</td>
+</tr>
+<tr>
+<td><em>blueTitle</em></td>
+<td><em>string</em></td>
+<td><em>"Blue: "</em></td>
+<td>The text inserted before the corresponding value.</td>
+</tr>
+<tr>
+<td><em>hueTitle</em></td>
+<td><em>string</em></td>
+<td><em>"Hue: "</em></td>
+<td>The text inserted before the corresponding value.</td>
+</tr>
+<tr>
+<td><em>saturationTitle</em></td>
+<td><em>string</em></td>
+<td><em>"Saturation: "</em></td>
+<td>The text inserted before the corresponding value.</td>
+</tr>
+<tr>
+<td><em>lightnessTitle</em></td>
+<td><em>string</em></td>
+<td><em>"Lightness: "</em></td>
+<td>The text inserted before the corresponding value.</td>
 </tr>
 </tbody>
 </table><h3>
 <a name="methods" class="anchor" href="#methods"><span class="octicon octicon-link"></span></a>Methods</h3>
 
-<p>To be continued.</p>
+<p>An instance of the Farba constructor has the following methods:</p>
+
+<p><strong><em>options</em></strong> - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.</p>
+
+<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+</pre></div>
+
+<p><strong><em>options</em></strong> - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.</p>
+
+<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+</pre></div>
+
+<p><strong><em>options</em></strong> - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.</p>
+
+<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+</pre></div>
+
+<p><strong><em>options</em></strong> - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.</p>
+
+<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+</pre></div>
+
+<p><strong><em>options</em></strong> - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.</p>
+
+<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+</pre></div>
+
+<p><strong><em>options</em></strong> - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.</p>
+
+<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+</pre></div>
 
 <h3>
 <a name="licence" class="anchor" href="#licence"><span class="octicon octicon-link"></span></a>Licence</h3>
