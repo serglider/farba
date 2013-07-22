@@ -256,40 +256,58 @@
 
 <p>An instance of the Farba constructor has the following methods:</p>
 
-<p><strong><em>options</em></strong> - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.</p>
+<p><strong><em>options</em></strong> - method dynamically overrides current options. It takes one argument - an object containing options to override.</p>
 
-<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">(</span> <span class="p">{</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">);</span>
 </pre></div>
 
-<p><strong><em>options</em></strong> - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.</p>
+<p><strong><em>hide</em></strong> - method hides the container <code>div</code> element.</p>
 
-<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+<p><strong><em>show</em></strong> - method shows the container <code>div</code> element.</p>
+
+<p><strong><em>exterminate</em></strong> - if no truthy argument provided,  method removes the container div element. Otherwise it removes the color picker canvas.</p>
+
+<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">exterminate</span><span class="p">(</span> <span class="kc">true</span> <span class="p">);</span> <span class="c1">// removes the canvas</span>
 </pre></div>
 
-<p><strong><em>options</em></strong> - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.</p>
+<p><strong><em>reset</em></strong> - if no truthy argument provided,  method sets the values of all colors to <code>255</code>, i.e. sets the resulting color to white. Otherwise it sets the resulting color to black.</p>
 
-<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">reset</span><span class="p">(</span> <span class="kc">true</span> <span class="p">);</span> <span class="c1">// this will set black color</span>
 </pre></div>
 
-<p><strong><em>options</em></strong> - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.</p>
+<p><strong><em>getRed</em></strong> - method returns the red component of the current color. Data type: number.</p>
 
-<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+<p><strong><em>getGreen</em></strong> - method returns the green component of the current color. Data type: number.</p>
+
+<p><strong><em>getBlue</em></strong> - method returns the blue component of the current color. Data type: number.</p>
+
+<p><strong><em>getHue</em></strong> - method returns the hue of the current color. Data type: number.</p>
+
+<p><strong><em>getSaturation</em></strong> - method returns the saturation of the current color. Data type: number.</p>
+
+<p><strong><em>getLightness</em></strong> - method returns the lightness of the current color. Data type: number.</p>
+
+<p><strong><em>getRGB</em></strong> - method returns a string representing CSS RGB value for the current color. RGB components as integer.</p>
+
+<p><strong><em>getPercentRGB</em></strong> - method returns a string representing CSS RGB value for the current color. RGB components as percentage value.</p>
+
+<p><strong><em>getHex</em></strong> - method returns a hexadecimal representation of the current color. if truthy argument provided, hash sign will be inserted at the beginning. Data type: string.</p>
+
+<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">getHex</span><span class="p">(</span> <span class="kc">true</span> <span class="p">);</span> <span class="c1">// this will return "#FFFFFF"</span>
 </pre></div>
 
-<p><strong><em>options</em></strong> - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.</p>
-
-<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
-</pre></div>
-
-<p><strong><em>options</em></strong> - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.</p>
-
-<div class="highlight"><pre><span class="nx">novafarba</span><span class="p">.</span><span class="nx">options</span><span class="p">({</span> <span class="nx">width</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">867</span><span class="p">,</span> <span class="nx">mouseInvert</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
-</pre></div>
+<p><strong><em>getHSL</em></strong> - method returns a string representing CSS HSL value for the current color.</p>
 
 <h3>
-<a name="licence" class="anchor" href="#licence"><span class="octicon octicon-link"></span></a>Licence</h3>
+<a name="copyright-and-license" class="anchor" href="#copyright-and-license"><span class="octicon octicon-link"></span></a>Copyright and license</h3>
 
-<p>To be continued.</p>
+<p>Copyright 2013 Sergey Chernykh</p>
+
+<p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:</p>
+
+<p><a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+
+<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
       </section>
     </div>
 
