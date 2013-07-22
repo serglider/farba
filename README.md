@@ -69,31 +69,44 @@ Name | Type | Default | Description
 
 An instance of the Farba constructor has the following methods:
 
-**_options_** - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.
+**_options_** - method dynamically overrides current options. It takes one argument - an object containing options to override.
 ```javascript
-novafarba.options({ width: 1000, height: 867, mouseInvert: true });
+novafarba.options( { width: 1000, height: 867, mouseInvert: true } );
 ```
 
-**_options_** - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.
+**_hide_** - method hides the container `div` element.
+
+**_show_** - method shows the container `div` element.
+
+**_exterminate_** - if no truthy argument provided,  method removes the container div element. Otherwise it removes the color picker canvas.
 ```javascript
-novafarba.options({ width: 1000, height: 867, mouseInvert: true });
+novafarba.exterminate( true ); // removes the canvas
 ```
-**_options_** - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.
+**_reset_** - if no truthy argument provided,  method sets the values of all colors to `255`, i.e. sets the resulting color to white. Otherwise it sets the resulting color to black.
 ```javascript
-novafarba.options({ width: 1000, height: 867, mouseInvert: true });
+novafarba.reset( true ); // this will set black color
 ```
-**_options_** - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.
+**_getRed_** - method returns the red component of the current color. Data type: number.
+
+**_getGreen_** - method returns the green component of the current color. Data type: number.
+
+**_getBlue_** - method returns the blue component of the current color. Data type: number.
+
+**_getHue_** - method returns the hue of the current color. Data type: number.
+
+**_getSaturation_** - method returns the saturation of the current color. Data type: number.
+
+**_getLightness_** - method returns the lightness of the current color. Data type: number.
+
+**_getRGB_** - method returns a string representing CSS RGB value for the current color. RGB components as integer.
+
+**_getPercentRGB_** - method returns the red component of the current color. Data type: number. RGB components as percentage value.
+
+**_getHex_** - method returns a hexadecimal representation of the current color. if truthy argument provided, hash sign will be inserted at the beginning. Data type: string.
 ```javascript
-novafarba.options({ width: 1000, height: 867, mouseInvert: true });
+novafarba.getHex( true ); // this will return "#FFFFFF"
 ```
-**_options_** - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.
-```javascript
-novafarba.options({ width: 1000, height: 867, mouseInvert: true });
-```
-**_options_** - The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.  The text inserted before the corresponding value.
-```javascript
-novafarba.options({ width: 1000, height: 867, mouseInvert: true });
-```
+**_getHSL_** - method returns a string representing CSS HSL value for the current color.
 
 ### Licence
 To be continued.
