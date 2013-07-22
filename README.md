@@ -100,7 +100,7 @@ novafarba.reset( true ); // this will set black color
 
 **_getRGB_** - method returns a string representing CSS RGB value for the current color. RGB components as integer.
 
-**_getPercentRGB_** - method returns the red component of the current color. Data type: number. RGB components as percentage value.
+**_getPercentRGB_** - method returns a string representing CSS RGB value for the current color. RGB components as percentage value.
 
 **_getHex_** - method returns a hexadecimal representation of the current color. if truthy argument provided, hash sign will be inserted at the beginning. Data type: string.
 ```javascript
@@ -109,4 +109,4 @@ novafarba.getHex( true ); // this will return "#FFFFFF"
 **_getHSL_** - method returns a string representing CSS HSL value for the current color.
 
 ### Licence
-To be continued.
+This project is licensed under the Apache License, Version 2.0. For more information, please, read the LICENSE.md.
