@@ -218,7 +218,7 @@ function Farba ( eid, foptions ) {
 			hexHslTextShiftX: 0,
 			hexHslTextShiftY: 0
 		};
-
+	if ( !( this instanceof Farba ) ) { return new Farba(); }
 	( function () {
 		var elId = eid || "farba";
 		box = document.querySelector( "#" + elId );
@@ -253,8 +253,12 @@ function Farba ( eid, foptions ) {
 		}
 		updateCanvas( ctx, circles, itexts  );
 	};
-	this.exterminate = function () {
-		box.parentNode.removeChild( box );
+	this.exterminate = function ( canv ) {
+		if ( canv ) {
+			box.removeChild( canvas );
+		}else {
+			box.parentNode.removeChild( box );
+		}
 	};
 	this.hide = function ( reset, fn ) {
 		box.style.display = "none";
